@@ -1,4 +1,4 @@
-export {
+import {
   keyCustomCode,
   commandCustomCode,
   typeCustomCode,

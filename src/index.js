@@ -4,6 +4,13 @@ import loadBlocks from './blocks';
 
 export default grapesjs.plugins.add('YOUR-PLUGIN-NAME', (editor, opts = {}) => {
   const options = { ...{
+    // Label of the custom code block
+    blockLabel: 'Custom Code',
+
+    // Object to extend the default custom code block, eg. { label: 'Custom Code', category: 'Extra', ... }.
+    // Pass a falsy value to avoid adding the block
+    blockCustomCode: {},
+
     // Object to extend the default custom code properties, eg. `{ name: 'Custom Code', droppable: false, ... }`
     propsCustomCode: {},
 
@@ -11,7 +18,7 @@ export default grapesjs.plugins.add('YOUR-PLUGIN-NAME', (editor, opts = {}) => {
     placeholderContent: '<span>Insert here your custom code</span>',
 
     // Object to extend the default component's toolbar button for the code, eg. `{ label: '</>', attributes: { title: 'Open custom code' } }`
-    // If you pass `false` the button won't be inserted
+    // Pass a falsy value to avoid adding the button
     toolbarBtnCustomCode: {},
 
     // Content to show when the custom code contains `<script>`
