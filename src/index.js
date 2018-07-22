@@ -1,6 +1,7 @@
 import grapesjs from 'grapesjs';
 import loadComponents from './components';
 import loadBlocks from './blocks';
+import loadCommands from './commands';
 
 export default grapesjs.plugins.add('YOUR-PLUGIN-NAME', (editor, opts = {}) => {
   const options = { ...{
@@ -28,6 +29,12 @@ export default grapesjs.plugins.add('YOUR-PLUGIN-NAME', (editor, opts = {}) => {
         </svg>
       Custom code with <i>&lt;script&gt;</i> can't be rendered on the canvas
     </div>`,
+
+    // Title for the custom code modal
+    modalTitle: 'Insert your code',
+
+    // Additional options for the code viewer, eg. `{ theme: 'hopscotch', readOnly: 0 }`
+    codeViewOptions: {},
   },  ...opts };
 
   // Add components
@@ -36,6 +43,6 @@ export default grapesjs.plugins.add('YOUR-PLUGIN-NAME', (editor, opts = {}) => {
   // Add blocks
   loadBlocks(editor, options);
 
-  // TODO Remove
-  editor.on('load', () => editor.addComponents(`<div style="margin:100px; padding:25px;">Content loaded from the plugin</div>`, { at: 0 }))
+  // Add commands
+  loadCommands(editor, options);
 });

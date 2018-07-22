@@ -65,7 +65,8 @@ export default (editor, opts = {}) => {
       },
 
       init() {
-        this.listenTo(this.model.components(), 'add remove reset', this.onComponentsChange)
+        this.listenTo(this.model.components(), 'add remove reset', this.onComponentsChange);
+        this.onComponentsChange();
       },
 
       /**
@@ -74,13 +75,17 @@ export default (editor, opts = {}) => {
       onComponentsChange() {
         timedInterval && clearInterval(timedInterval);
         timedInterval = setTimeout(() => {
-          const content = this.model.get(keyCustomCode);
-          console.log('onComponentsChange', content);
+          const { model } = this;
+          const content = model.get(keyCustomCode) || '';
+          let droppable = 1;
 
           // Avoid rendering codes with scripts
           if (content.indexOf('<script') >= 0) {
             this.el.innerHTML = opts.placeholderScript;
+            droppable = 0;
           }
+
+          model.set({ droppable });
         }, 0);
       },
 
