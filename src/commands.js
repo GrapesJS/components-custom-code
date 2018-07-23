@@ -1,13 +1,22 @@
 import {
-  commandCustomCode,
+  commandNameCustomCode,
   keyCustomCode,
 } from './config';
 
 export default (editor, opts = {}) => {
   const cmd = editor.Commands;
-  const { modalTitle, codeViewOptions } = opts;
+  const { modalTitle, codeViewOptions, commandCustomCode } = opts;
+  const appendToContent = (target, content) => {
+    if (content instanceof HTMLElement) {
+        target.appendChild(content);
+    } else if (content) {
+        target.insertAdjacentHTML('beforeend', content);
+    }
+  }
 
-  cmd.add(commandCustomCode, {
+  cmd.add(commandNameCustomCode, {
+    keyCustomCode,
+
     run(editor, sender, opts = {}) {
       this.editor = editor;
       this.options = opts;
@@ -15,11 +24,7 @@ export default (editor, opts = {}) => {
       const target = this.target;
 
       if (target && target.get('editable')) {
-        const title = opts.title || modalTitle;
-        const content = this.getContent();
-        const code = target.get(keyCustomCode) || '';
-        editor.Modal.open({ title, content });
-        this.getCodeViewer().setContent(code);
+        this.showCustomCode(target);
       }
     },
 
@@ -27,24 +32,62 @@ export default (editor, opts = {}) => {
       editor.Modal.close();
     },
 
+    /**
+     * Method which tells how to show the custom code
+     * @param  {Component} target
+     */
+    showCustomCode(target) {
+      const { editor, options } = this;
+      const title = options.title || modalTitle;
+      const content = this.getContent();
+      const code = target.get(keyCustomCode) || '';
+      editor.Modal.open({ title, content });
+      this.getCodeViewer().setContent(code);
+    },
+
+    /**
+     * Custom pre-content. Can be a simple string or an HTMLElement
+     */
+    getPreContent() {},
+
+    /**
+     * Custom post-content. Can be a simple string or an HTMLElement
+     */
+    getPostContent() {},
+
+    /**
+     * Get all the content for the custom code
+     * @return {HTMLElement}
+     */
     getContent() {
-      const { options, editor, target } = this;
+      const { editor, options, target } = this;
       const content = document.createElement('div');
       const codeViewer = this.getCodeViewer();
+      appendToContent(content, this.getPreContent());
       content.appendChild(codeViewer.getElement());
+      appendToContent(content, this.getPostContent());
+      appendToContent(content, this.getContentActions());
 
+      return content;
+    },
+
+    /**
+     * Get the actions content. Can be a simple string or an HTMLElement
+     * @return {HTMLElement|String}
+     */
+    getContentActions() {
+      const { editor, options, target } = this;
       const btn = document.createElement('button');
-      const pfx = options.pfx || editor.getConfig('stylePrefix');
-      content.appendChild(btn);
-      btn.innerHTML = options.labelBtn || 'Save';
+      const pfx = editor.getConfig('stylePrefix');
+      btn.innerHTML = opts.buttonLabel;
       btn.className = `${pfx}btn-prim ${pfx}btn-import__custom-code`;
       btn.onclick = () => {
-        const code = codeViewer.getContent();
+        const code = this.getCodeViewer().getContent();
         target.set(keyCustomCode, code);
         editor.Modal.close();
       };
 
-      return content;
+      return btn;
     },
 
     getCodeViewer() {
@@ -60,6 +103,8 @@ export default (editor, opts = {}) => {
       }
 
       return this.codeViewer;
-    }
+    },
+
+    ...commandCustomCode,
   });
 };
