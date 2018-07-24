@@ -37,7 +37,7 @@ export default grapesjs.plugins.add('YOUR-PLUGIN-NAME', (editor, opts = {}) => {
     codeViewOptions: {},
 
     // Label for the default save button
-    buttonLabel: 'Insert your code',
+    buttonLabel: 'Save',
 
     // Object to extend the default custom code command.
     // Check the source to see all available methods

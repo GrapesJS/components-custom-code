@@ -91,7 +91,7 @@ export default (editor, opts = {}) => {
 
       onActive() {
         const target = this.model;
-        this.em.get('Editor').runCommand(commandNameCustomCode, { target });
+        this.em.get('Commands').run(commandNameCustomCode, { target });
       },
     })
   });

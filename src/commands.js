@@ -14,6 +14,7 @@ export default (editor, opts = {}) => {
     }
   }
 
+  // Add the custom code command
   cmd.add(commandNameCustomCode, {
     keyCustomCode,
 
@@ -76,20 +77,30 @@ export default (editor, opts = {}) => {
      * @return {HTMLElement|String}
      */
     getContentActions() {
-      const { editor, options, target } = this;
+      const { editor } = this;
       const btn = document.createElement('button');
       const pfx = editor.getConfig('stylePrefix');
       btn.innerHTML = opts.buttonLabel;
       btn.className = `${pfx}btn-prim ${pfx}btn-import__custom-code`;
-      btn.onclick = () => {
-        const code = this.getCodeViewer().getContent();
-        target.set(keyCustomCode, code);
-        editor.Modal.close();
-      };
+      btn.onclick = () => this.handleSave();
 
       return btn;
     },
 
+    /**
+     * Handle the main save task
+     */
+    handleSave() {
+      const { editor, target } = this;
+      const code = this.getCodeViewer().getContent();
+      target.set(keyCustomCode, code);
+      editor.Modal.close();
+    },
+
+    /**
+     * Return the code viewer instance
+     * @return {CodeViewer}
+     */
     getCodeViewer() {
       const { editor } = this;
 
