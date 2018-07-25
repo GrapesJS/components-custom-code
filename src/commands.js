@@ -70,6 +70,8 @@ export default (editor, opts = {}) => {
       content.appendChild(codeViewer.getElement());
       appendToContent(content, this.getPostContent());
       appendToContent(content, this.getContentActions());
+      codeViewer.refresh();
+      setTimeout(()=> codeViewer.focus(), 0);
 
       return content;
     },

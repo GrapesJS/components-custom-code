@@ -1,20 +1,7 @@
-# GrapesJS Plugin Boilerplate
+# GrapesJS Custom Code
 
+This plugin adds the possibility to embed custom code inside templates
 
-<span><a href="https://david-dm.org/artf/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>
-
-This boilerplate helps you quickly start a production ready plugin for GrapesJS. If you don't know from where to start, check this guide [Creating plugins](https://grapesjs.com/docs/modules/Plugins.html). Sections below are also used as boilerplate for your README, follow these steps
-
-### Usage
-1. Clone this repository `git clone https://github.com/artf/grapesjs-plugin-boilerplate.git grapesjs-custom-code`
-1. Replace in all files `grapesjs-custom-code` with your plugin name
-1. Update `package.json`
-1. Install dependencies `npm i` and run the local server `npm start`
-1. Start creating your plugin from `src/index.js`
-1. Show some gif/demo if possible
-1. Update README
-1. When you're ready update the production file `npm run build`
-1. Publish
 
 
 
@@ -23,13 +10,11 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 
 * Plugin name: `grapesjs-custom-code`
 * Components
-  * `new-component1`
-  * `new-component2`
+  * `custom-code`
 * Blocks
-  * `new-block1`
-  * `new-block1`
-...
-
+  * `custom-code`
+* Commands
+  * `custom-code:open-modal`
 
 
 
@@ -38,7 +23,16 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 
 |Option|Description|Default|
 |-|-|-
-|`option1`|Description option|`default value`|
+| `blockLabel` | Label of the custom code block | `Custom Code` |
+| `blockCustomCode` | Object to extend the default custom code block, eg. `{ label: 'Custom Code', category: 'Extra', ... }`. Pass a falsy value to avoid adding the block | `{}` |
+| `propsCustomCode` | Object to extend the default custom code properties, eg. `{ name: 'Custom Code', droppable: false, ... }` | `{}` |
+| `placeholderContent` | Initial content of the custom code component | `<span>Insert here your custom code</span>` |
+| `toolbarBtnCustomCode` | Object to extend the default component's toolbar button for the code, eg. `{ label: '</>', attributes: { title: 'Open custom code' } }`. Pass a falsy value to avoid adding the button | `{}` |
+| `placeholderScript` | Content to show when the custom code contains `<script>` | [Check source](##) |
+| `modalTitle` | Title for the modal | `Insert your code` |
+| `codeViewOptions` | Additional options for the code viewer, eg. `{ theme: 'hopscotch', readOnly: 0 }` | `{}` |
+| `buttonLabel` | Label for the default save button | `Save` |
+| `commandCustomCode` | Object to extend the default custom code command. [Check the source](##) to see all available methods | `{}` |
 
 
 
@@ -51,7 +45,7 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 * NPM
   * `npm i grapesjs-custom-code`
 * GIT
-  * `git clone https://github.com/YOUR-NAME/grapesjs-custom-code.git`
+  * `git clone https://github.com/artf/grapesjs-custom-code.git`
 
 
 
@@ -89,7 +83,7 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 Clone the repository
 
 ```sh
-$ git clone https://github.com/YOUR-NAME/grapesjs-custom-code.git
+$ git clone https://github.com/artf/grapesjs-custom-code.git
 $ cd grapesjs-custom-code
 ```
 
