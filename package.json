@@ -2,7 +2,7 @@
   "name": "grapesjs-plugin-boilerplate",
   "version": "0.1.9",
   "description": "GrapesJS Plugin Boilerplate",
-  "main": "dist/YOUR-PLUGIN-NAME.min.js",
+  "main": "dist/grapesjs-custom-code.min.js",
   "scripts": {
     "lint": "eslint src",
     "v:patch": "npm version --no-git-tag-version patch",
@@ -11,13 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/artf/grapesjs-plugin-boilerplate.git"
+    "url": "https://github.com/artf/grapesjs-custom-code.git"
   },
   "keywords": [
     "grapesjs",
     "plugin",
-    "boilerplate",
-    "wysiwyg"
+    "import",
+    "custom",
+    "code"
   ],
   "author": "Artur Arseniev",
   "license": "BSD-3-Clause",

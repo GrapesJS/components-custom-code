@@ -3,7 +3,7 @@ import loadComponents from './components';
 import loadBlocks from './blocks';
 import loadCommands from './commands';
 
-export default grapesjs.plugins.add('YOUR-PLUGIN-NAME', (editor, opts = {}) => {
+export default grapesjs.plugins.add('grapesjs-custom-code', (editor, opts = {}) => {
   const options = { ...{
     // Label of the custom code block
     blockLabel: 'Custom Code',

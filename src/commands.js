@@ -64,6 +64,8 @@ export default (editor, opts = {}) => {
       const { editor, options, target } = this;
       const content = document.createElement('div');
       const codeViewer = this.getCodeViewer();
+      const pfx = editor.getConfig('stylePrefix');
+      content.className = `${pfx}custom-code`;
       appendToContent(content, this.getPreContent());
       content.appendChild(codeViewer.getElement());
       appendToContent(content, this.getPostContent());
