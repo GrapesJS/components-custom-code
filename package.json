@@ -1,7 +1,7 @@
 {
-  "name": "grapesjs-plugin-boilerplate",
-  "version": "0.1.9",
-  "description": "GrapesJS Plugin Boilerplate",
+  "name": "grapesjs-custom-code",
+  "version": "0.1.1",
+  "description": "GrapesJS component for the embed of custom code",
   "main": "dist/grapesjs-custom-code.min.js",
   "scripts": {
     "lint": "eslint src",

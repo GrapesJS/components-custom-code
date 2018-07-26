@@ -1,9 +1,10 @@
 # GrapesJS Custom Code
 
-This plugin adds the possibility to embed custom code inside templates
+This plugin adds the possibility to embed custom code
 
+<p align="center"><img src="https://user-images.githubusercontent.com/11614725/43289377-15322c5e-912b-11e8-9a29-cc2dc45af48a.gif" alt="GrapesJS Custom Code" align="center"/></p>
 
-
+> Requires GrapesJS v0.14.25 or higher
 
 
 ## Summary
@@ -28,11 +29,11 @@ This plugin adds the possibility to embed custom code inside templates
 | `propsCustomCode` | Object to extend the default custom code properties, eg. `{ name: 'Custom Code', droppable: false, ... }` | `{}` |
 | `placeholderContent` | Initial content of the custom code component | `<span>Insert here your custom code</span>` |
 | `toolbarBtnCustomCode` | Object to extend the default component's toolbar button for the code, eg. `{ label: '</>', attributes: { title: 'Open custom code' } }`. Pass a falsy value to avoid adding the button | `{}` |
-| `placeholderScript` | Content to show when the custom code contains `<script>` | [Check source](##) |
+| `placeholderScript` | Content to show when the custom code contains `<script>` | [Check the source](https://github.com/artf/grapesjs-custom-code/tree/master/src/index.js) |
 | `modalTitle` | Title for the modal | `Insert your code` |
 | `codeViewOptions` | Additional options for the code viewer, eg. `{ theme: 'hopscotch', readOnly: 0 }` | `{}` |
 | `buttonLabel` | Label for the default save button | `Save` |
-| `commandCustomCode` | Object to extend the default custom code command. [Check the source](##) to see all available methods | `{}` |
+| `commandCustomCode` | Object to extend the default custom code command, eg. `{ getPreContent: () => '<div>Paste here</div>' }` [Check the source](https://github.com/artf/grapesjs-custom-code/tree/master/src/commands.js) to see all available methods | `{}` |
 
 
 
