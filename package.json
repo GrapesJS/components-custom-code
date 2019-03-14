@@ -30,9 +30,6 @@
       "transform-object-rest-spread"
     ]
   },
-  "peerDependencies": {
-    "grapesjs": "0.x"
-  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",

@@ -1,9 +1,8 @@
-import grapesjs from 'grapesjs';
 import loadComponents from './components';
 import loadBlocks from './blocks';
 import loadCommands from './commands';
 
-export default grapesjs.plugins.add('grapesjs-custom-code', (editor, opts = {}) => {
+export default (editor, opts = {}) => {
   const options = { ...{
     // Label of the custom code block
     blockLabel: 'Custom Code',
@@ -52,4 +51,4 @@ export default grapesjs.plugins.add('grapesjs-custom-code', (editor, opts = {}) 
 
   // Add commands
   loadCommands(editor, options);
-});
+};
