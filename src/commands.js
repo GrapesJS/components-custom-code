@@ -42,7 +42,10 @@ export default (editor, opts = {}) => {
       const title = options.title || modalTitle;
       const content = this.getContent();
       const code = target.get(keyCustomCode) || '';
-      editor.Modal.open({ title, content });
+      editor.Modal
+        .open({ title, content })
+        .getModel()
+        .once('change:open', () => editor.stopCommand(this.id));
       this.getCodeViewer().setContent(code);
     },
 
@@ -61,7 +64,7 @@ export default (editor, opts = {}) => {
      * @return {HTMLElement}
      */
     getContent() {
-      const { editor, options, target } = this;
+      const { editor } = this;
       const content = document.createElement('div');
       const codeViewer = this.getCodeViewer();
       const pfx = editor.getConfig('stylePrefix');
