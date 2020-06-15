@@ -11,6 +11,15 @@ export default (editor, opts = {}) => {
   const { toolbarBtnCustomCode } = opts;
   let timedInterval;
 
+  dc.addType('script', {
+    view: {
+      onRender() {
+        const isCC = this.model.closestType(typeCustomCode);
+        isCC && (this.el.innerHTML = '');
+      }
+    },
+  });
+
   dc.addType(typeCustomCode, {
 
     model: defaultModel.extend({
