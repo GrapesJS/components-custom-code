@@ -86,6 +86,7 @@ export default (editor, opts = {}) => {
     getContentActions() {
       const { editor } = this;
       const btn = document.createElement('button');
+      btn.setAttribute('type', 'button');
       const pfx = editor.getConfig('stylePrefix');
       btn.innerHTML = opts.buttonLabel;
       btn.className = `${pfx}btn-prim ${pfx}btn-import__custom-code`;
