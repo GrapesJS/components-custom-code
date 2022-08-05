@@ -8,7 +8,6 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
   let timedInterval: NodeJS.Timeout;
 
   Components.addType('script', {
-    // @ts-ignore
     view: {
       onRender() {
         // @ts-ignore
