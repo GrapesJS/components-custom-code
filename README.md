@@ -54,6 +54,7 @@ This plugin adds the possibility to embed custom code
 
 ## Usage
 
+
 ```html
 <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/grapesjs"></script>
@@ -73,6 +74,26 @@ This plugin adds the possibility to embed custom code
       }
   });
 </script>
+```
+
+```jsx
+import GrapesJS from 'grapesjs';
+import customCodePlugin from 'grapesjs-custom-code';
+
+...
+
+GrapesJS.init({
+ container : '#gjs',
+ ...
+ plugins: [
+   customCodePlugin
+ ],
+ pluginsOpts: {
+   [customCodePlugin]: {
+     // options
+   }
+ }
+});
 ```
 
 
