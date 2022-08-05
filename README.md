@@ -24,7 +24,6 @@ This plugin adds the possibility to embed custom code
 
 |Option|Description|Default|
 |-|-|-
-| `blockLabel` | Label of the custom code block | `Custom Code` |
 | `blockCustomCode` | Object to extend the default custom code block, eg. `{ label: 'Custom Code', category: 'Extra', ... }`. Pass a falsy value to avoid adding the block | `{}` |
 | `propsCustomCode` | Object to extend the default custom code properties, eg. `{ name: 'Custom Code', droppable: false, ... }` | `{}` |
 | `placeholderContent` | Initial content of the custom code component | `<span>Insert here your custom code</span>` |
