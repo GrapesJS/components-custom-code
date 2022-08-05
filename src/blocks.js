@@ -1,6 +1,4 @@
-import {
-  typeCustomCode,
-} from './config';
+import { typeCustomCode } from './utils';
 
 export default (editor, opts = {}) => {
   const bm = editor.BlockManager;

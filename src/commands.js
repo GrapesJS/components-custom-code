@@ -1,7 +1,7 @@
 import {
   commandNameCustomCode,
   keyCustomCode,
-} from './config';
+} from './utils';
 
 export default (editor, opts = {}) => {
   const cmd = editor.Commands;

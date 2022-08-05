@@ -2,7 +2,7 @@ import {
   keyCustomCode,
   commandNameCustomCode,
   typeCustomCode,
-} from './config';
+} from './utils';
 
 export default (editor, opts = {}) => {
   const dc = editor.DomComponents;

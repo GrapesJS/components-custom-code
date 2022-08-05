@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-custom-code",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "GrapesJS component for the embed of custom code",
   "main": "dist/index.js",
   "scripts": {
