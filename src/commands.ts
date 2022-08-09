@@ -1,12 +1,11 @@
-import {
-  commandNameCustomCode,
-  keyCustomCode,
-} from './config';
+import type grapesjs from 'grapesjs';
+import { PluginOptions } from '.';
+import { commandNameCustomCode, keyCustomCode } from './utils';
 
-export default (editor, opts = {}) => {
-  const cmd = editor.Commands;
+export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
   const { modalTitle, codeViewOptions, commandCustomCode } = opts;
-  const appendToContent = (target, content) => {
+
+  const appendToContent = (target: HTMLElement, content: HTMLElement | string) => {
     if (content instanceof HTMLElement) {
         target.appendChild(content);
     } else if (content) {
@@ -15,17 +14,17 @@ export default (editor, opts = {}) => {
   }
 
   // Add the custom code command
-  cmd.add(commandNameCustomCode, {
+  editor.Commands.add(commandNameCustomCode, {
     keyCustomCode,
 
-    run(editor, sender, opts = {}) {
-      this.editor = editor;
-      this.options = opts;
-      this.target = opts.target || editor.getSelected();
-      const target = this.target;
+    run(editor, s, opts = {}) {
+      const target = opts.target || editor.getSelected();
+      // @ts-ignore
+      this.target = target;
 
-      if (target && target.get('editable')) {
-        this.showCustomCode(target);
+      if (target?.get('editable')) {
+        // @ts-ignore
+        this.showCustomCode(target, opts);
       }
     },
 
@@ -37,15 +36,15 @@ export default (editor, opts = {}) => {
      * Method which tells how to show the custom code
      * @param  {Component} target
      */
-    showCustomCode(target) {
-      const { editor, options } = this;
+    showCustomCode(target: grapesjs.Component, options: any) {
       const title = options.title || modalTitle;
-      const content = this.getContent();
       const code = target.get(keyCustomCode) || '';
+      // @ts-ignore
+      const content = this.getContent();
       editor.Modal
         .open({ title, content })
-        .getModel()
-        .once('change:open', () => editor.stopCommand(this.id));
+        .onceClose(() => editor.stopCommand(commandNameCustomCode))
+      // @ts-ignore
       this.getCodeViewer().setContent(code);
     },
 
@@ -64,14 +63,17 @@ export default (editor, opts = {}) => {
      * @return {HTMLElement}
      */
     getContent() {
-      const { editor } = this;
-      const content = document.createElement('div');
+      // @ts-ignore
       const codeViewer = this.getCodeViewer();
+      const content = document.createElement('div');
       const pfx = editor.getConfig('stylePrefix');
       content.className = `${pfx}custom-code`;
+      // @ts-ignore
       appendToContent(content, this.getPreContent());
       content.appendChild(codeViewer.getElement());
+      // @ts-ignore
       appendToContent(content, this.getPostContent());
+      // @ts-ignore
       appendToContent(content, this.getContentActions());
       codeViewer.refresh();
       setTimeout(()=> codeViewer.focus(), 0);
@@ -84,12 +86,12 @@ export default (editor, opts = {}) => {
      * @return {HTMLElement|String}
      */
     getContentActions() {
-      const { editor } = this;
       const btn = document.createElement('button');
       btn.setAttribute('type', 'button');
       const pfx = editor.getConfig('stylePrefix');
-      btn.innerHTML = opts.buttonLabel;
+      btn.innerHTML = opts.buttonLabel!;
       btn.className = `${pfx}btn-prim ${pfx}btn-import__custom-code`;
+      // @ts-ignore
       btn.onclick = () => this.handleSave();
 
       return btn;
@@ -99,7 +101,9 @@ export default (editor, opts = {}) => {
      * Handle the main save task
      */
     handleSave() {
-      const { editor, target } = this;
+      // @ts-ignore
+      const { target } = this;
+      // @ts-ignore
       const code = this.getCodeViewer().getContent();
       target.set(keyCustomCode, code);
       editor.Modal.close();
@@ -110,9 +114,9 @@ export default (editor, opts = {}) => {
      * @return {CodeViewer}
      */
     getCodeViewer() {
-      const { editor } = this;
-
+      // @ts-ignore
       if (!this.codeViewer) {
+        // @ts-ignore
         this.codeViewer = editor.CodeManager.createViewer({
           codeName: 'htmlmixed',
           theme: 'hopscotch',
@@ -120,7 +124,7 @@ export default (editor, opts = {}) => {
           ...codeViewOptions,
         });
       }
-
+      // @ts-ignore
       return this.codeViewer;
     },
 

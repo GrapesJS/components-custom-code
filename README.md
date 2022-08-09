@@ -24,10 +24,8 @@ This plugin adds the possibility to embed custom code
 
 |Option|Description|Default|
 |-|-|-
-| `blockLabel` | Label of the custom code block | `Custom Code` |
 | `blockCustomCode` | Object to extend the default custom code block, eg. `{ label: 'Custom Code', category: 'Extra', ... }`. Pass a falsy value to avoid adding the block | `{}` |
-| `propsCustomCode` | Object to extend the default custom code properties, eg. `{ name: 'Custom Code', droppable: false, ... }` | `{}` |
-| `placeholderContent` | Initial content of the custom code component | `<span>Insert here your custom code</span>` |
+| `propsCustomCode` | Object to extend the default custom code properties, eg. `{ name: 'Custom Code', components: '<span>Initial content</span>' ... }` | `{}` |
 | `toolbarBtnCustomCode` | Object to extend the default component's toolbar button for the code, eg. `{ label: '</>', attributes: { title: 'Open custom code' } }`. Pass a falsy value to avoid adding the button | `{}` |
 | `placeholderScript` | Content to show when the custom code contains `<script>` | [Check the source](https://github.com/artf/grapesjs-custom-code/tree/master/src/index.js) |
 | `modalTitle` | Title for the modal | `Insert your code` |

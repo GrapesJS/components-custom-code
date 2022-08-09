@@ -1,32 +1,32 @@
-import {
-  keyCustomCode,
-  commandNameCustomCode,
-  typeCustomCode,
-} from './config';
+import type grapesjs from 'grapesjs';
+import { PluginOptions } from '.';
+import { keyCustomCode, commandNameCustomCode, typeCustomCode } from './utils';
 
-export default (editor, opts = {}) => {
-  const dc = editor.DomComponents;
-  const defaultType = dc.getType('default');
-  const defaultModel = defaultType.model;
+export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
+  const { Components } = editor;
   const { toolbarBtnCustomCode } = opts;
-  let timedInterval;
+  let timedInterval: NodeJS.Timeout;
 
-  dc.addType('script', {
+  Components.addType('script', {
     view: {
       onRender() {
-        const isCC = this.model.closestType(typeCustomCode);
-        isCC && (this.el.innerHTML = '');
+        // @ts-ignore
+        const { model, el } = this;
+        const isCC = model.closestType(typeCustomCode);
+        isCC && (el.innerHTML = '');
       }
     },
   });
 
-  dc.addType(typeCustomCode, {
-
-    model: defaultModel.extend({
+  Components.addType(typeCustomCode, {
+    model: {
       defaults: {
-        ...defaultModel.prototype.defaults,
         name: 'Custom Code',
         editable: true,
+        components: {
+          tagName: 'span',
+          components: { type: 'textnode', content: 'Insert here your custom code' }
+        },
         ...opts.propsCustomCode,
       },
 
@@ -34,14 +34,17 @@ export default (editor, opts = {}) => {
        * Initilize the component
        */
       init() {
-        this.listenTo(this, `change:${keyCustomCode}`, this.onCustomCodeChange);
-        const initialCode = this.get(keyCustomCode) || opts.placeholderContent;
+        // @ts-ignore
+        this.on(`change:${keyCustomCode}`, this.onCustomCodeChange);
+        const initialCode = this.get(keyCustomCode);
         !this.components().length && this.components(initialCode);
         const toolbar = this.get('toolbar');
         const id = 'custom-code';
 
         // Add the custom code toolbar button if requested and it's not already in
+        // @ts-ignore
         if (toolbarBtnCustomCode && !toolbar.filter(tlb => tlb.id === id ).length) {
+          // @ts-ignore
           toolbar.unshift({
             id,
             command: commandNameCustomCode,
@@ -56,42 +59,41 @@ export default (editor, opts = {}) => {
       /**
        * Callback to launch on keyCustomCode change
        */
+      // @ts-ignore
       onCustomCodeChange() {
+        // @ts-ignore
         this.components(this.get(keyCustomCode));
       },
-    }, {
-      /**
-       * The component can be used only if requested explicitly via `type` property
-       */
-      isComponent() {
-        return false;
-      }
-    }),
+    },
 
-    view: defaultType.view.extend({
+    view: {
       events: {
         dblclick: 'onActive',
       },
 
       init() {
+        // @ts-ignore
         this.listenTo(this.model.components(), 'add remove reset', this.onComponentsChange);
+        // @ts-ignore
         this.onComponentsChange();
       },
 
       /**
        * Things to do once inner components of custom code are changed
        */
+      // @ts-ignore
       onComponentsChange() {
         timedInterval && clearInterval(timedInterval);
         timedInterval = setTimeout(() => {
-          const { model } = this;
+          // @ts-ignore
+          const { model, el } = this;
           const content = model.get(keyCustomCode) || '';
-          let droppable = 1;
+          let droppable = true;
 
           // Avoid rendering codes with scripts
-          if (content.indexOf('<script') >= 0) {
-            this.el.innerHTML = opts.placeholderScript;
-            droppable = 0;
+          if (content.indexOf('<script') >= 0 && opts.placeholderScript) {
+            el.innerHTML = opts.placeholderScript;
+            droppable = false;
           }
 
           model.set({ droppable });
@@ -99,9 +101,10 @@ export default (editor, opts = {}) => {
       },
 
       onActive() {
-        const target = this.model;
-        this.em.get('Commands').run(commandNameCustomCode, { target });
+        // @ts-ignore
+        const { model, em } = this;
+        em.get('Commands').run(commandNameCustomCode, { target: model });
       },
-    })
+    },
   });
 }
