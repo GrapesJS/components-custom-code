@@ -23,6 +23,10 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
       defaults: {
         name: 'Custom Code',
         editable: true,
+        components: {
+          tagName: 'span',
+          components: { type: 'textnode', content: 'Insert here your custom code' }
+        },
         ...opts.propsCustomCode,
       },
 
@@ -32,7 +36,7 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
       init() {
         // @ts-ignore
         this.on(`change:${keyCustomCode}`, this.onCustomCodeChange);
-        const initialCode = this.get(keyCustomCode) || opts.placeholderContent;
+        const initialCode = this.get(keyCustomCode);
         !this.components().length && this.components(initialCode);
         const toolbar = this.get('toolbar');
         const id = 'custom-code';

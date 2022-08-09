@@ -19,12 +19,6 @@ export type PluginOptions = {
    propsCustomCode?: grapesjs.ComponentDefinition;
 
   /**
-   * Initial content of the custom code component
-   * @default '<span>Insert here your custom code</span>'
-   */
-   placeholderContent?: string;
-
-  /**
    * Object to extend the default component's toolbar button for the code. Pass a falsy value to avoid adding the button
    * @example
    * { label: '</>', attributes: { title: 'Open custom code' } }
@@ -65,7 +59,6 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
   const options: PluginOptions = {
     blockCustomCode: {},
     propsCustomCode: {},
-    placeholderContent: '<span>Insert here your custom code</span>',
     toolbarBtnCustomCode: {},
     placeholderScript: `<div style="pointer-events: none; padding: 10px;">
       <svg viewBox="0 0 24 24" style="height: 30px; vertical-align: middle;">
