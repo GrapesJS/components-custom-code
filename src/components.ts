@@ -88,12 +88,12 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
           // @ts-ignore
           const { model, el } = this;
           const content = model.get(keyCustomCode) || '';
-          let droppable = 1;
+          let droppable = true;
 
           // Avoid rendering codes with scripts
-          if (content.indexOf('<script') >= 0) {
+          if (content.indexOf('<script') >= 0 && opts.placeholderScript) {
             el.innerHTML = opts.placeholderScript;
-            droppable = 0;
+            droppable = false;
           }
 
           model.set({ droppable });
