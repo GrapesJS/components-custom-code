@@ -64,7 +64,7 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
      */
     getContent() {
       // @ts-ignore
-      const codeViewer = this.getCodeViewer();
+      const codeViewer:CodeViewer = this.getCodeViewer();
       const content = document.createElement('div');
       const pfx = editor.getConfig('stylePrefix');
       content.className = `${pfx}custom-code`;
@@ -102,7 +102,7 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
      */
     handleSave() {
       // @ts-ignore
-      const { target } = this;
+      const { target }:any = this;
       // @ts-ignore
       const code = this.getCodeViewer().getContent();
       target.set(keyCustomCode, code);

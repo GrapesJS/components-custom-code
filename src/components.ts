@@ -96,7 +96,7 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
             droppable = false;
           }
 
-          model.set({ droppable });
+          model.set( "droppable", droppable );
         }, 0);
       },
 
