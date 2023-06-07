@@ -1,7 +1,7 @@
-import type grapesjs from 'grapesjs';
-import loadComponents from './components';
+import type { BlockProperties, ComponentDefinition, Plugin } from 'grapesjs';
 import loadBlocks from './blocks';
 import loadCommands from './commands';
+import loadComponents from './components';
 
 export type PluginOptions = {
   /**
@@ -9,14 +9,14 @@ export type PluginOptions = {
    * @example
    * { label: 'Custom Code', category: 'Extra', ... }
    */
-   blockCustomCode?: Partial<grapesjs.BlockOptions>;
+   blockCustomCode?: Partial<BlockProperties>;
 
   /**
    * Object to extend the default custom code properties.
    * @example
    * { name: 'Custom Code', droppable: false, ... }
    */
-   propsCustomCode?: grapesjs.ComponentDefinition;
+   propsCustomCode?: ComponentDefinition;
 
   /**
    * Object to extend the default component's toolbar button for the code. Pass a falsy value to avoid adding the button
@@ -55,7 +55,7 @@ export type PluginOptions = {
     commandCustomCode?: Record<string, any>;
 };
 
-const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
+const plugin: Plugin<PluginOptions> = (editor, opts = {}) => {
   const options: PluginOptions = {
     blockCustomCode: {},
     propsCustomCode: {},
