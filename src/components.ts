@@ -1,8 +1,8 @@
-import type grapesjs from 'grapesjs';
+import type { Editor } from 'grapesjs';
 import { PluginOptions } from '.';
 import { keyCustomCode, commandNameCustomCode, typeCustomCode } from './utils';
 
-export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
+export default (editor: Editor, opts: PluginOptions = {}) => {
   const { Components } = editor;
   const { toolbarBtnCustomCode } = opts;
   let timedInterval: NodeJS.Timeout;
@@ -10,7 +10,6 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
   Components.addType('script', {
     view: {
       onRender() {
-        // @ts-ignore
         const { model, el } = this;
         const isCC = model.closestType(typeCustomCode);
         isCC && (el.innerHTML = '');
@@ -26,7 +25,7 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
         components: {
           tagName: 'span',
           components: { type: 'textnode', content: 'Insert here your custom code' }
-        },
+        } as any,
         ...opts.propsCustomCode,
       },
 
@@ -34,17 +33,14 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
        * Initilize the component
        */
       init() {
-        // @ts-ignore
         this.on(`change:${keyCustomCode}`, this.onCustomCodeChange);
         const initialCode = this.get(keyCustomCode);
         !this.components().length && this.components(initialCode);
-        const toolbar = this.get('toolbar');
+        const toolbar = this.get('toolbar')!;
         const id = 'custom-code';
 
         // Add the custom code toolbar button if requested and it's not already in
-        // @ts-ignore
         if (toolbarBtnCustomCode && !toolbar.filter(tlb => tlb.id === id ).length) {
-          // @ts-ignore
           toolbar.unshift({
             id,
             command: commandNameCustomCode,
@@ -59,9 +55,7 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
       /**
        * Callback to launch on keyCustomCode change
        */
-      // @ts-ignore
       onCustomCodeChange() {
-        // @ts-ignore
         this.components(this.get(keyCustomCode));
       },
     },
@@ -69,23 +63,19 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
     view: {
       events: {
         dblclick: 'onActive',
-      },
+      } as any,
 
       init() {
-        // @ts-ignore
         this.listenTo(this.model.components(), 'add remove reset', this.onComponentsChange);
-        // @ts-ignore
         this.onComponentsChange();
       },
 
       /**
        * Things to do once inner components of custom code are changed
        */
-      // @ts-ignore
       onComponentsChange() {
         timedInterval && clearInterval(timedInterval);
         timedInterval = setTimeout(() => {
-          // @ts-ignore
           const { model, el } = this;
           const content = model.get(keyCustomCode) || '';
           let droppable = true;
@@ -101,7 +91,6 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
       },
 
       onActive() {
-        // @ts-ignore
         const { model, em } = this;
         em.get('Commands').run(commandNameCustomCode, { target: model });
       },
