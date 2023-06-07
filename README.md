@@ -27,11 +27,11 @@ This plugin adds the possibility to embed custom code
 | `blockCustomCode` | Object to extend the default custom code block, eg. `{ label: 'Custom Code', category: 'Extra', ... }`. Pass a falsy value to avoid adding the block | `{}` |
 | `propsCustomCode` | Object to extend the default custom code properties, eg. `{ name: 'Custom Code', components: '<span>Initial content</span>' ... }` | `{}` |
 | `toolbarBtnCustomCode` | Object to extend the default component's toolbar button for the code, eg. `{ label: '</>', attributes: { title: 'Open custom code' } }`. Pass a falsy value to avoid adding the button | `{}` |
-| `placeholderScript` | Content to show when the custom code contains `<script>` | [Check the source](https://github.com/artf/grapesjs-custom-code/tree/master/src/index.js) |
+| `placeholderScript` | Content to show when the custom code contains `<script>` | [Check the source](https://github.com/GrapesJS/components-custom-code/blob/master/src/index.ts) |
 | `modalTitle` | Title for the modal | `Insert your code` |
 | `codeViewOptions` | Additional options for the code viewer, eg. `{ theme: 'hopscotch', readOnly: 0 }` | `{}` |
 | `buttonLabel` | Label for the default save button | `Save` |
-| `commandCustomCode` | Object to extend the default custom code command, eg. `{ getPreContent: () => '<div>Paste here</div>' }` [Check the source](https://github.com/artf/grapesjs-custom-code/tree/master/src/commands.js) to see all available methods | `{}` |
+| `commandCustomCode` | Object to extend the default custom code command, eg. `{ getPreContent: () => '<div>Paste here</div>' }` [Check the source](https://github.com/GrapesJS/components-custom-code/blob/master/src/commands.ts) to see all available methods | `{}` |
 
 
 
@@ -44,7 +44,7 @@ This plugin adds the possibility to embed custom code
 * NPM
   * `npm i grapesjs-custom-code`
 * GIT
-  * `git clone https://github.com/artf/grapesjs-custom-code.git`
+  * `git clone https://github.com/GrapesJS/components-custom-code.git`
 
 
 
@@ -103,7 +103,7 @@ GrapesJS.init({
 Clone the repository
 
 ```sh
-$ git clone https://github.com/artf/grapesjs-custom-code.git
+$ git clone https://github.com/GrapesJS/components-custom-code.git
 $ cd grapesjs-custom-code
 ```
 
