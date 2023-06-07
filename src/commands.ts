@@ -1,11 +1,13 @@
-import type grapesjs from 'grapesjs';
+import type { Editor, Component } from 'grapesjs';
 import { PluginOptions } from '.';
 import { commandNameCustomCode, keyCustomCode } from './utils';
 
-export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
+type ContentTypes = HTMLElement | string | undefined;
+
+export default (editor: Editor, opts: PluginOptions = {}) => {
   const { modalTitle, codeViewOptions, commandCustomCode } = opts;
 
-  const appendToContent = (target: HTMLElement, content: HTMLElement | string) => {
+  const appendToContent = (target: HTMLElement, content?: ContentTypes) => {
     if (content instanceof HTMLElement) {
         target.appendChild(content);
     } else if (content) {
@@ -16,14 +18,14 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
   // Add the custom code command
   editor.Commands.add(commandNameCustomCode, {
     keyCustomCode,
+    target: null as null | Component,
+    codeViewer: null as any,
 
     run(editor, s, opts = {}) {
       const target = opts.target || editor.getSelected();
-      // @ts-ignore
       this.target = target;
 
       if (target?.get('editable')) {
-        // @ts-ignore
         this.showCustomCode(target, opts);
       }
     },
@@ -36,15 +38,13 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
      * Method which tells how to show the custom code
      * @param  {Component} target
      */
-    showCustomCode(target: grapesjs.Component, options: any) {
+    showCustomCode(target: Component, options: any) {
       const title = options.title || modalTitle;
       const code = target.get(keyCustomCode) || '';
-      // @ts-ignore
       const content = this.getContent();
       editor.Modal
         .open({ title, content })
         .onceClose(() => editor.stopCommand(commandNameCustomCode))
-      // @ts-ignore
       this.getCodeViewer().setContent(code);
     },
 
@@ -63,17 +63,13 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
      * @return {HTMLElement}
      */
     getContent() {
-      // @ts-ignore
       const codeViewer = this.getCodeViewer();
       const content = document.createElement('div');
       const pfx = editor.getConfig('stylePrefix');
       content.className = `${pfx}custom-code`;
-      // @ts-ignore
-      appendToContent(content, this.getPreContent());
+      appendToContent(content, this.getPreContent() as ContentTypes);
       content.appendChild(codeViewer.getElement());
-      // @ts-ignore
-      appendToContent(content, this.getPostContent());
-      // @ts-ignore
+      appendToContent(content, this.getPostContent() as ContentTypes);
       appendToContent(content, this.getContentActions());
       codeViewer.refresh();
       setTimeout(()=> codeViewer.focus(), 0);
@@ -91,7 +87,6 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
       const pfx = editor.getConfig('stylePrefix');
       btn.innerHTML = opts.buttonLabel!;
       btn.className = `${pfx}btn-prim ${pfx}btn-import__custom-code`;
-      // @ts-ignore
       btn.onclick = () => this.handleSave();
 
       return btn;
@@ -101,11 +96,9 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
      * Handle the main save task
      */
     handleSave() {
-      // @ts-ignore
       const { target } = this;
-      // @ts-ignore
       const code = this.getCodeViewer().getContent();
-      target.set(keyCustomCode, code);
+      target?.set(keyCustomCode, code);
       editor.Modal.close();
     },
 
@@ -114,9 +107,7 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
      * @return {CodeViewer}
      */
     getCodeViewer() {
-      // @ts-ignore
       if (!this.codeViewer) {
-        // @ts-ignore
         this.codeViewer = editor.CodeManager.createViewer({
           codeName: 'htmlmixed',
           theme: 'hopscotch',
@@ -124,7 +115,6 @@ export default (editor: grapesjs.Editor, opts: PluginOptions = {}) => {
           ...codeViewOptions,
         });
       }
-      // @ts-ignore
       return this.codeViewer;
     },
 
