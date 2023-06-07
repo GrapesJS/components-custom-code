@@ -24,7 +24,7 @@
 
 
     <script type="text/javascript">
-      setTimeout(() => {
+      window.onload = () => {
         window.editor = grapesjs.init({
           height: '100%',
           showOffsets: true,
@@ -36,7 +36,7 @@
 
           plugins: ['grapesjs-custom-code'],
         });
-      })
+      };
     </script>
   </body>
 </html>
