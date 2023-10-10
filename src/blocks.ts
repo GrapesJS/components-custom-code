@@ -15,7 +15,7 @@ export default (editor: Editor, { blockCustomCode }: PluginOptions = {}) => {
     category: 'Extra',
     activate: true,
     select: true,
-    content: { type: typeCustomCode },
+    content: { type: typeCustomCode, attributes: { class: 'grapes-custom-code' } },
     ...blockCustomCode
   });
 }

@@ -18,6 +18,7 @@ export default (editor: Editor, opts: PluginOptions = {}) => {
   });
 
   Components.addType(typeCustomCode, {
+    isComponent: el => el.className === 'grapes-custom-code',
     model: {
       defaults: {
         name: 'Custom Code',
